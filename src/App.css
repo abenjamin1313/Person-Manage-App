@@ -2,3 +2,23 @@
   text-align: center;
 }
 
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: 600;
+}
+.btn {
+    background-color: green;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    margin: 4px auto;
+}
+.btn:hover {
+  background-color: lightseagreen;
+  color: black;
+}
