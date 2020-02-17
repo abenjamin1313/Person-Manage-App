@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Cockpit.module.scss';
 
+const Cockpit = props => {
+    // combine componentDidMount & componentDidUpdate in one hook
+    // can use ore than once
+    useEffect(() => {
+      console.log('[Cockoit.js] - useEffect');
+      // HTTP requests....
+      const timer = setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+      return () => {
+        clearTimeout(timer); // clean up work in useEffect
+        console.log('[Cockpit.js] - cleanup work in useEffect');
+      };
+    }, []); // empty array it will only run once
+    // props.persons will only run when first started and when perosns com is changed
 
-const cockpit = (props) => {
+    useEffect(() => {
+      console.log('[Cockoit.js] - 2end useEffect');
+      return () => {
+        console.log('[Cockpit.js] - cleanup work in 2end useEffect');
+      };
+    });
     const assignedClasses = [];
     let btnClass = '';
 
@@ -10,23 +30,24 @@ const cockpit = (props) => {
         btnClass = classes.Red;
     }
     
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
       assignedClasses.push(classes.red); // classes = ['red']
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
       assignedClasses.push(classes.bold); // classes = ['red', 'bold']
     }
 
-    return (
-        <div className={classes.Cockpit}>
-            <h1>{props.title}</h1>
-            <hr/>
-            <p className={assignedClasses.join(' ')}>This is really working!</p>
-            <button className={btnClass} onClick={props.clicked}>
-            Toggle Persons
-            </button>
-        </div>
-    );
-};
+  return (
+      <div className={classes.Cockpit}>
+          <h1>{props.title}</h1>
+          <hr/>
+          <br/>
+          <p className={assignedClasses.join(' ')}>This is really working!</p>
+          <button className={btnClass} onClick={props.clicked}>
+          Toggle Persons
+          </button>
+      </div>
+  );
+}
 
-export default cockpit;
+export default React.memo(Cockpit); // react.meo optimizes fucntional com, only updates it when needed

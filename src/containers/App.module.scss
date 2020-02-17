@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+
+  button {
+    background-color: blue;
+    color: white;
+    font: inherit;
+    border: 1px solid black;
+    padding: 8px;
+    cursor: pointer;
+    margin: 10px auto;
+  
+    &:hover {
+      background-color: lightblue;
+      color: blue;
+    }
+  }
+}
+
