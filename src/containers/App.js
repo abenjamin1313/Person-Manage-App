@@ -5,10 +5,12 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/WithClass';
 import Aux from '../hoc/Auxiliary';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
     console.log('[App.js] - constructor');
+
     this.state = {
       persons: [
         { id: 'asfa1', name: 'Max', age: 28 },
@@ -17,7 +19,8 @@ class App extends Component {
       ],
       otherState: 'some other value',
       showPersons: false,
-      showCockpit: true
+      showCockpit: true,
+      changeCounter: 0
     };
   }
 
@@ -53,7 +56,12 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    this.setState((preState, props) => {
+      return {
+        persons: persons, 
+        changeCounter:  preState.changeCounter + 1
+      }
+    });
   };
 
   deletePersonHandler = personIndex => {
@@ -83,16 +91,17 @@ class App extends Component {
     }
 
     return (
-      <Aux>
-        <button onClick={() => {this.setState({ showCockpit: false})}}>Remove Cockpit</button>
-          {this.state.showCockpit ? <Cockpit 
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            personsLength={this.state.persons.length} 
-            clicked={this.togglePersonsHandler}
-            /> : null }
-          {persons}
-      </Aux>
+ 
+        <Aux>
+          <button onClick={() => {this.setState({ showCockpit: false})}}>Remove Cockpit</button>
+            {this.state.showCockpit ? <Cockpit 
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personsLength={this.state.persons.length} 
+              clicked={this.togglePersonsHandler}
+              /> : null }
+            {persons}
+        </Aux>
     );
   }
 }
