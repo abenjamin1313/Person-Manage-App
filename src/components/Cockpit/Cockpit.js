@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.module.scss';
 
 const Cockpit = props => {
+
+    const toggleBtnRef = useRef(null);
+
     // combine componentDidMount & componentDidUpdate in one hook
     // can use ore than once
     useEffect(() => {
       console.log('[Cockoit.js] - useEffect');
       // HTTP requests....
-      const timer = setTimeout(() => {
-          alert('Saved data to cloud');
-      }, 1000);
+      // const timer = setTimeout(() => {
+      //     alert('Saved data to cloud');
+      // }, 1000);
+      toggleBtnRef.current.click();
       return () => {
-        clearTimeout(timer); // clean up work in useEffect
+       // clearTimeout(timer); // clean up work in useEffect
         console.log('[Cockpit.js] - cleanup work in useEffect');
       };
     }, []); // empty array it will only run once
@@ -23,6 +27,7 @@ const Cockpit = props => {
         console.log('[Cockpit.js] - cleanup work in 2end useEffect');
       };
     });
+
     const assignedClasses = [];
     let btnClass = '';
 
@@ -43,7 +48,7 @@ const Cockpit = props => {
           <hr/>
           <br/>
           <p className={assignedClasses.join(' ')}>This is really working!</p>
-          <button className={btnClass} onClick={props.clicked}>
+          <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
           Toggle Persons
           </button>
       </div>
