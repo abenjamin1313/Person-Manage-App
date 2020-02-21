@@ -2,7 +2,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Person from '../Person/Person';
 
+
 class Persons extends PureComponent {
+    constructor(props) {
+        super(props);
+        console.log('[Persons.js] - Inside Constructor', props);
+        this.lastPersonRef = React.createRef();
+    }
 
     // static getDerivedStateFromProps(props, state) {
     //     console.log('[Persons.js] - getDerivedStateFromProps');
@@ -21,6 +27,11 @@ class Persons extends PureComponent {
     //         return false;
     //     }
     // }
+
+    componentDidMount() {
+        console.log('[Persons.js] - componentDidMount');
+        //this.lastPersonRef.current.focus();
+    }
 
     getSnapshotBeforeUpdate(prevProps, preState) {
         console.log('[Persons.js] - getSnapshotBeforeUpdate');
@@ -45,8 +56,11 @@ class Persons extends PureComponent {
                 name={person.name}
                 age={person.age}
                 key={person.id}
-                changed={event => this.props.changed(event, person.id)} />
-          } )
+                ref={this.lastPersonRef}
+                changed={event => this.props.changed(event, person.id)} 
+                isAuth={this.props.isAuthenticated} 
+                />
+          } );
     };  
 }
     

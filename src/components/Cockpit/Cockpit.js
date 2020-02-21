@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import classes from './Cockpit.module.scss';
+import AuthContext from '../../context/auth-context';
 
 const Cockpit = props => {
-
     const toggleBtnRef = useRef(null);
+    const authContext = useContext(AuthContext);
+
+    console.log(authContext.authenticated);
 
     // combine componentDidMount & componentDidUpdate in one hook
     // can use ore than once
@@ -51,6 +54,9 @@ const Cockpit = props => {
           <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
           Toggle Persons
           </button>
+          <br/>
+          
+            <button className={btnClass} onClick={authContext.login}>Log In</button>
       </div>
   );
 }
